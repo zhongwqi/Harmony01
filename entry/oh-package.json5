@@ -5,6 +5,9 @@
   "main": "",
   "author": "",
   "license": "",
-  "dependencies": {}
+  "dependencies": {
+
+    "commonlib": 'file:../../Harmony01/commons/commonlib'
+  }
 }
 

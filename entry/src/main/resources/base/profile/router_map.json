@@ -1,0 +1,12 @@
+{
+  "routerMap": [
+    {
+      "name": "LaunchPage",
+      "pageSourceFile": "src/main/ets/pages/LaunchPage.ets",
+      "buildFunction": "LaunchPageBuilder",
+      "data": {
+        "description": "this is LaunchPage"
+      }
+    }
+  ]
+}
