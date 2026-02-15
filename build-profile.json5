@@ -37,6 +37,10 @@
           ]
         }
       ]
+    },
+    {
+      "name": "commonlib",
+      "srcPath": "./commons/commonlib"
     }
   ]
 }
