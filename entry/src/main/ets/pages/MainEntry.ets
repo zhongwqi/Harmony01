@@ -47,7 +47,7 @@ struct MainEntry {
       Image(this.vm.curIndex == index ? item.iconChecked : item.icon)
         .width(24)
         .height(24)
-      Text()
+      Text(item.label)
         .fontColor(this.vm.curIndex == index ? '#FD4238' : '#99000000')
         .fontSize(10)
         .margin({top: 4})
