@@ -41,6 +41,22 @@
     {
       "name": "commonlib",
       "srcPath": "./commons/commonlib"
+    },
+    {
+      "name": "home",
+      "srcPath": "./features/home"
+    },
+    {
+      "name": "mine",
+      "srcPath": "./features/mine",
+    },
+    {
+      "name": "calories",
+      "srcPath": "./features/calories",
+    },
+    {
+      "name": "classification",
+      "srcPath": "./features/classification",
     }
   ]
 }

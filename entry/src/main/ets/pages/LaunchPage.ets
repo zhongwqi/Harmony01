@@ -7,10 +7,10 @@ export function LaunchPageBuilder() {
 
 @ComponentV2
 struct LaunchPage {
-
   aboutToAppear(): void {
     setTimeout(() => {
       RouterModule.replace(RouterMap.MAIN_ENTRY)
+      console.log("RouterModule.replace(RouterMap.MAIN_ENTRY)");
     }, 1000)
   }
 

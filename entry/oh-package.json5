@@ -7,7 +7,11 @@
   "license": "",
   "dependencies": {
 
-    "commonlib": 'file:../../Harmony01/commons/commonlib'
+    "commonlib": 'file:../../Harmony01/commons/commonlib',
+    "home": 'file:../../Harmony01/features/home',
+    "classification": 'file:../../Harmony01/features/classification',
+    "calories": 'file:../../Harmony01/features/calories',
+    "mine": 'file:../../Harmony01/features/mine',
   }
 }
 
