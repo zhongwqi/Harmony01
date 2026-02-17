@@ -15,3 +15,4 @@ export { GlobalContextUtils } from './src/main/ets/utils/ContextUtils';
 
 export { BaseHeader } from './src/main/ets/components/BaseHeader'
 export { HeaderRefreshBuilder } from './src/main/ets/components/HeaderRefreshBuilder'
+export { PreferenceUtil } from './src/main/ets/utils/PreferenceUtil'

@@ -1,5 +1,7 @@
-import { BaseHeader, HeaderRefreshBuilder } from "commonlib"
+import { BaseHeader, CommonConstants, HeaderRefreshBuilder, PreferenceUtil, RouterMap, RouterModule } from "commonlib"
+import { FeaturedRecipes, TabItem } from "featured_recipes"
 import { HomePageVM } from "../viewmodels/HomePageVM"
+import { emitter } from "@kit.BasicServicesKit"
 
 @Builder
 export function HomePageBuilder() {
@@ -10,6 +12,10 @@ export function HomePageBuilder() {
 @ComponentV2
 struct HomePage {
   vm: HomePageVM = HomePageVM.instance
+
+  aboutToAppear(): void {
+    this.vm.getDishesList()
+  }
 
   build() {
     NavDestination() {
@@ -42,11 +48,96 @@ struct HomePage {
             )
             .borderRadius(16)
             .displayCount(this.vm.gridCount / 2)
+
+            Column() {
+              Row({space: 8}) {
+                Image($r('app.media.ic_glass')).width(16)
+                Text('今天吃点什么?').fontColor($r('sys.color.font_primary'))
+              }
+              .width('100%')
+              .padding(12)
+              .borderRadius(24)
+              .margin({top: 12})
+              .backgroundColor("#0D000000")
+              .onClick(() => {
+                RouterModule.push(RouterMap.SEARCH)
+              })
+              .onVisibleAreaChange([0.0, 1.0], (isExpanding: boolean, currentRatio: number) => {
+                this.vm.isSearchVisible = currentRatio === 0
+              });
+
+              Row() {
+                ForEach(this.vm.tabList, (item: TabItem, index: number) => {
+                  Column(){
+                    Image(item.icon).width(32).height(32)
+                    Text(item.label).fontSize(10).fontColor($r('sys.color.font_primary'))
+                  }.onClick(() => {
+                    if ((this.vm.tabList.length - 1) !== index) {
+                      PreferenceUtil.getInstance().putToArray(CommonConstants.SEARCH_KEYS, item.label)
+                      RouterModule.push(RouterMap.SEARCH, {'keyword': item.label} as Record<string, string>)
+                    } else {
+                      emitter.emit('jumpPage')
+                    }
+                  })
+                }, (item: TabItem) => item.label)
+              }
+              .height(56)
+              .margin({top: 8, bottom: 8})
+              .padding({top: 4, left: 16, right: 16})
+              .justifyContent(FlexAlign.SpaceBetween)
+              .width('100%')
+            }
+            .width('100%')
+
+            FeaturedRecipes({
+              dishesList: this.vm.dishesList,
+              showTitle: true,
+              isLoading: this.vm.isLoading,
+              onClickCb: async (id: number) => {
+                RouterModule.push(RouterMap.DISHES, { 'id': id } as Record<string, number>)
+              },
+              jumpBloggerInfo: (id: number) => {
+                RouterModule.push(RouterMap.BLOGGER_PROFILE_PAGE, { 'id': id } as Record<string, number>)
+              },
+              loadMore: () => {
+                this.vm.isLoading = true;
+                // 模拟接口请求数据的延时操作
+                setTimeout(()=>{
+                  if(this.vm.dishesList.totalCount() < this.vm.totalCount) {
+                    this.vm.dishesList.appendArrayData(this.vm.dishesList.getDataList().slice(0, 25))
+                    this.vm.isLoading = false;
+                  } else {
+                    this.vm.isLoading = false;
+                    this.emptyToast();
+                  }
+                },1000)
+              }
+            })
           }
-        }
-        .padding({left: 16, right: 16})
+          .padding({left: 16, right: 16})
+        }.align(Alignment.Top)
+        .height('calc(100% - 56vp)')
+        .scrollBar(BarState.Off)
+        .edgeEffect(EdgeEffect.Spring);
       }
+      .refreshOffset(56)
+      .onRefreshing(() => {
+        this.refresh();
+      })
     }
     .hideTitleBar(true)
+  }
+
+  refresh(): void {
+    setTimeout(()=>{
+      this.vm.isRefreshing = false;
+    },1000)
+  }
+
+  public emptyToast() {
+    this.getUIContext().getPromptAction().showToast({
+      message: '暂无更新数据',
+      alignment: Alignment.Bottom,
+    })
   }
 }

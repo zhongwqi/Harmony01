@@ -6,6 +6,8 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "commonlib": 'file:../../commons/commonlib'
+    "commonlib": 'file:../../commons/commonlib',
+    "featured_recipes": 'file:../../components/featured_recipes',
+    "network": 'file:../../components/network'
   }
 }

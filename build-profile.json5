@@ -57,6 +57,18 @@
     {
       "name": "classification",
       "srcPath": "./features/classification",
+    },
+    {
+      "name": "featured_recipes",
+      "srcPath": "./components/featured_recipes",
+    },
+    {
+      "name": "base_ui",
+      "srcPath": "./components/base_ui",
+    },
+    {
+      "name": "network",
+      "srcPath": "./components/network",
     }
   ]
 }
